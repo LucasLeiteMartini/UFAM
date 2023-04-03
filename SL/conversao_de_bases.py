@@ -45,3 +45,4 @@ valor_base_final = valor_base_final[::-1]
 
 print(valor_base10)
 print(int(valor_base_final))
+
