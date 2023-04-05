@@ -28,19 +28,21 @@ quantidade = input("Digite o valor a ser convertido: ")
 base_origem = input("Digite sua base de origem(limite de base 36): ")
 base_final = input("Digite a base final desejada(limite de base 36): ")
 
-def conversao(quantidade, base_origem, base_final):
-    # Checa se o input das bases forem vazios ou não, se forem, assumem o valor 10 como base padrão
-    if base_origem == '' and base_final == '':
+# Checa se o input das bases forem vazios ou não, se forem, assumem o valor 10 como base padrão
+if base_origem == '' and base_final == '':
+    base_origem = 10
+    base_final = 10
+elif base_origem == '':
         base_origem = 10
+        base_final = int(base_final)
+elif base_final == '':
         base_final = 10
-    elif base_origem == '':
-        base_origem = 10
-    elif base_final == '':
-        base_final = 10
-    else:
+        base_origem = int(base_origem)
+else:
         base_origem = int(base_origem)
         base_final = int(base_final)
 
+def conversao(quantidade, base_origem, base_final):
 
     base10 = base_to_dec(quantidade, base_origem)
     valor_final = dec_to_base(base10,base_final)
