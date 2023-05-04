@@ -1,9 +1,5 @@
 #include <stdio.h>
 
-<<<<<<< HEAD
-=======
-
->>>>>>> 47fc35f1472df88d3a7095915e5e00b146e62f29
 void questao03(int vet[], int x){
     int temp;
     for(int i = 0; i < x/2; i++){
@@ -13,10 +9,6 @@ void questao03(int vet[], int x){
     }
 }
 
-<<<<<<< HEAD
-=======
-
->>>>>>> 47fc35f1472df88d3a7095915e5e00b146e62f29
 void mostraVetor(int vet[], unsigned n) {
   unsigned x;
 

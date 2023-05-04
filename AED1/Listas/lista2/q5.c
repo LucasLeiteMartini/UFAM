@@ -1,8 +1,5 @@
 #include <stdio.h>
-<<<<<<< HEAD
 #include <string.h>
-=======
->>>>>>> 47fc35f1472df88d3a7095915e5e00b146e62f29
 
 int questao05(char t[], char p[]) {
     int tamanho_t = strlen(t);
@@ -22,7 +19,6 @@ int questao05(char t[], char p[]) {
 }
 
 int main() {
-<<<<<<< HEAD
 
     char texto[2000]; // texto onde vamos buscar a string de consulta
     char padrao[100]; // string de consulta
@@ -39,22 +35,4 @@ int main() {
   }
 
 
-=======
-  char texto[2000]; // texto onde vamos buscar a string de consulta
-  char padrao[100]; // string de consulta
-   unsigned tamVetor;
-
-   unsigned x;
-
-   scanf("%[^#]%*c",texto);
-   scanf("%[^#]%*c",padrao);
-
-   if(questao05(texto,padrao)) {
-     printf("VERDADEIRO\n");
-   }
-   else {
-     printf("FALSO\n");
-   }
-   
->>>>>>> 47fc35f1472df88d3a7095915e5e00b146e62f29
 }
