@@ -55,8 +55,9 @@ void removeFila(tipoLista *l){
 
     aux = l->prim;
     l->prim = aux->prox;
-    free(aux);
-
+    if(!l->prim){
+        l->ult = NULL;
+    }    
 }
 
 int mostraPosicao(tipoLista *l, char chave[]){
