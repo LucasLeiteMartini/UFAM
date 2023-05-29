@@ -65,16 +65,16 @@ void removeFila(tipoLista *l){
 
 int mostraPosicao(tipoLista *l, char chave[]){
     tipoNo *aux;
-    int count = 0;
+    int count = 1;
 
     aux = l->prim;
 
     while(aux){
-        if(strcmp(aux->dado.nome, chave)!=0){
-            count++;
-            aux = aux->prox;
+        if(strcmp(aux->dado.nome, chave)==0){
+            return count;
         }
+        count++;
+        aux = aux->prox;
     }
-    return count;
-
+    return 0;
 }
