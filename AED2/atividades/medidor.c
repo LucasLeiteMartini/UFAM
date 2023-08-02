@@ -1,6 +1,6 @@
 #include "stdio.h"
 #include "stdlib.h"
-#include "listase.h"
+#include "fila.h"
 
 typedef struct medicao t_medicao;
 struct medicao{
@@ -25,8 +25,6 @@ void imprimir_medicao(void* m){
 
 int comparar_medicao(void* m1, void* m2){
 
-    
-
     return 1;
 }
 
@@ -46,17 +44,19 @@ t_medicao* ler_medicao(){
 int main(int argc, char const *argv[])
 {
     short ainda_tem=1;    
-    t_lse* medicoes = criar_lse(imprimir_medicao, comparar_medicao);
+    //t_lse* medicoes = criar_lse(imprimir_medicao, comparar_medicao);
+    t_fila* medicoes = criar_fila(0);
     while(ainda_tem){
         t_medicao* nova = ler_medicao();
         if (nova){
-            inserir_lse(medicoes, nova);
+            enfileirar(medicoes, nova);
         }else{
             ainda_tem = 0; // falso
         }
     }
     
-    imprimir_lse(medicoes);
+    t_medicao* m = desenfileirar(medicoes);
+    imprimir_medicao(m);
 
     return 0;
 }
