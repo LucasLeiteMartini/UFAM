@@ -2,7 +2,7 @@
 #include "stdlib.h"
 #include "listase.h"
 
-typedef struct elem_se{
+typedef struct elem_lse{
     void* carga_util;
     struct elem_se* prox;
 } t_elemento_lse;
@@ -93,6 +93,10 @@ void* acessar_lse(t_lse* lse, int pos){
         carga_util = cam->carga_util;  
     }
     return carga_util;
+}
+
+void imprime_elem(t_lse *lse){
+    lse->imprimir(lse->inicio->carga_util);
 }
 
 void imprimir_lse(t_lse *lse){
