@@ -2,7 +2,7 @@
 #include "stdlib.h"
 #include "listase.h"
 
-typedef struct elem_lse{
+typedef struct elem_se{
     void* carga_util;
     struct elem_se* prox;
 } t_elemento_lse;
@@ -14,8 +14,6 @@ t_elemento_lse* criar_elemento_lse(void* carga_util){
     t_elemento_lse* novo = malloc(sizeof(t_elemento_lse));
     novo->carga_util = carga_util;
     novo->prox = NULL;
-
-    printf("Criando: %p %p %p\n", novo, novo->carga_util, novo->prox);
 
     return novo;
 }
@@ -67,6 +65,25 @@ void inserir_final_lse(t_lse* lse, void* carga_util){
 
 }
 
+void inserir_conteudo_lse(t_lse* lse, void* carga){
+    t_elemento_lse* cam = lse->inicio;
+    while( (cam) && (lse->comparar(cam->carga_util, carga) < 0)){
+        cam = cam->prox;
+    }
+    if (cam == lse->inicio){
+        inserir_lse(lse, carga);
+    }
+    else if(!cam){
+        inserir_final_lse(lse, carga);
+    }
+    else{
+        t_elemento_lse* novo = criar_elemento_lse(carga);
+        novo->prox = cam->prox;
+        cam->prox = novo;
+    }
+
+}
+
 void* remover_lse(t_lse* lse){
     void* carga_util = NULL;
     t_elemento_lse *removivel = lse->inicio;
@@ -79,8 +96,34 @@ void* remover_lse(t_lse* lse){
     return carga_util;
 }
 
+void* acessar_com_comparacao(t_lse* lse, void* carga){
+    t_elemento_lse* cam = lse->inicio;
+    while( (cam) && (lse->comparar(cam->carga_util, carga) < 0)){
+        cam = cam->prox;
+    }
+
+    return cam->carga_util;
+
+}
+
+void* remove_elem(t_lse* lse, void* chave){
+    void* carga_util = NULL;
+    t_elemento_lse* removivel = lse->inicio;
+    while((removivel) && (lse->comparar(removivel->carga_util, chave) < 0)){
+        removivel = removivel->prox;
+    }
+        carga_util = removivel->carga_util;
+        lse->inicio->prox = removivel->prox;
+        free(removivel);
+
+    return carga_util;
+
+}
+
+
+
 void* acessar_lse(t_lse* lse, int pos){
-    pos = (pos>lse->tamanho?pos%lse->tamanho:pos);
+    pos = (pos>lse->tamanho ? pos%lse->tamanho : pos);
     t_elemento_lse *cam = lse->inicio;
     void* carga_util=NULL;
 
@@ -95,7 +138,7 @@ void* acessar_lse(t_lse* lse, int pos){
     return carga_util;
 }
 
-void imprime_elem(t_lse *lse){
+void imprime_elem(t_lse* lse){
     lse->imprimir(lse->inicio->carga_util);
 }
 
