@@ -156,15 +156,11 @@ int main(){
     agendar_evento(agenda, evento);
     agendar_evento(agenda,evento2);
 
-    imprimir_lse(agenda->eventos);
-
-    remove_elem(agenda->eventos, chave);
-
-    printf("\n\n");
+    // remove_elem(agenda->eventos, chave);
 
     imprimir_lse(agenda->eventos);
 
-/*     printf("%d\n", quantificar_evento(agenda));
+    printf("%d\n", quantificar_evento(agenda));
 
     printf("\nProximo evento\n");
     proximo_evento(agenda);
@@ -184,7 +180,7 @@ int main(){
 
     concluir_evento(agenda);
     printf("\neventos atuais\n");
-    imprimir_lse(agenda->eventos); */
+    imprimir_lse(agenda->eventos); 
 
     return 0;
 }

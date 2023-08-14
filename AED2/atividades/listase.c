@@ -98,25 +98,15 @@ void* remover_lse(t_lse* lse){
 
 void* acessar_com_comparacao(t_lse* lse, void* carga){
     t_elemento_lse* cam = lse->inicio;
-    while( (cam) && (lse->comparar(cam->carga_util, carga) < 0)){
+    while( (cam->prox) && (lse->comparar(cam->prox->carga_util, carga) != 0)){
         cam = cam->prox;
     }
 
-    return cam->carga_util;
+    return cam->prox->carga_util;
 
 }
 
 void* remove_elem(t_lse* lse, void* chave){
-    void* carga_util = NULL;
-    t_elemento_lse* removivel = lse->inicio;
-    while((removivel) && (lse->comparar(removivel->carga_util, chave) < 0)){
-        removivel = removivel->prox;
-    }
-        carga_util = removivel->carga_util;
-        lse->inicio->prox = removivel->prox;
-        free(removivel);
-
-    return carga_util;
 
 }
 
