@@ -1,0 +1,1 @@
+typedef void (*t_heap_comparar)(void*, void*);
