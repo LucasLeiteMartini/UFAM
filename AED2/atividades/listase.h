@@ -9,6 +9,8 @@ t_elemento_lse* criar_elemento_lse(void* carga_util);
 void inserir_lse(t_lse* lse, void* carga_util);
 void inserir_final_lse(t_lse* lse, void* carga_util);
 void inserir_conteudo_lse(t_lse* lse, void* carga_util);
+void inserir_posicao(t_lse* lse, void* carga);
+
 
 void* remover_lse(t_lse* lse);
 void* remove_elem(t_lse* lse, void* chave);

@@ -36,7 +36,7 @@ t_agenda* criar_agenda(t_imprimir_lse imprime, t_comparar_lse compara){
 }
 
 void agendar_evento(t_agenda* agenda , t_evento* evento){
-    inserir_conteudo_lse(agenda->eventos, evento);
+    inserir_posicao(agenda->eventos, evento);
     agenda->tamanho++;
 }
 
@@ -71,69 +71,60 @@ void concluir_evento(t_agenda* agenda){
     agenda->tamanho--;
 }
 
-int compara_eventos(void* e1, void* e2){
+int compara_eventos(void* e1, void* e2) {
     t_evento* ee1 = e1;
     t_evento* ee2 = e2;
+    int prior1, prior2;
     int dia1, dia2, mes1, mes2, ano1, ano2, hora1, hora2, minuto1, minuto2;
 
     sscanf(ee1->tempo, "%d/%d/%d %d:%d", &dia1, &mes1, &ano1, &hora1, &minuto1);
     sscanf(ee2->tempo, "%d/%d/%d %d:%d", &dia2, &mes2, &ano2, &hora2, &minuto2);
-    
-    if(ano1 < ano2){
-        return -1;
-    }else{
-        return 1;
+
+    if (ano1 != ano2) {
+        return ano1 - ano2;
+    } else if (mes1 != mes2) {
+        return mes1 - mes2;
+    } else if (dia1 != dia2) {
+        return dia1 - dia2;
+    } else if (hora1 != hora2) {
+        return hora1 - hora2;
+    } else if (minuto1 != minuto2) {
+        return minuto1 - minuto2;
+    } else {
+        if (strcmp(ee1->prioridade, "alta") == 0) {
+            prior1 = 3;
+        } else if (strcmp(ee1->prioridade, "media") == 0) {
+            prior1 = 2;
+        } else {
+            prior1 = 1;
+        }
+
+        if (strcmp(ee2->prioridade, "alta") == 0) {
+            prior2 = 3;
+        } else if (strcmp(ee2->prioridade, "media") == 0) {
+            prior2 = 2;
+        } else {
+            prior2 = 1;
+        }
+
+        return prior2 - prior1;
     }
-
-    if(mes1 < mes2){
-        return -1;
-    }else{
-        return 1;
-    }
-
-    if(dia1 < dia2){
-        return -1;
-    }else{
-        return 1;
-    }
-
-    if(hora1 < hora2){
-        return -1;
-    }else{
-        return 1;
-    }
-
-    if(minuto1 < minuto2){
-        return -1;
-    }else{
-        return 1;
-    }
-
-    if(ee1->prioridade == "alta" && ee2->prioridade != "alta"){
-        return -1;
-    }else if(ee2->prioridade == "alta" && ee1->prioridade != "alta"){
-        return 1;
-    }else if(ee1->prioridade == "media" && ee2->prioridade != "media"){
-        return -1;
-    }else if(ee2->prioridade == "media" && ee1->prioridade != "media"){
-        return 1;
-    }
-
-    return 0;
-
 }
+
 
 int main(){
 
     t_agenda* agenda;
     t_evento* evento;
     t_evento* evento2;
-    t_evento* chave;
-    t_evento* novo_evento;
+    t_evento* evento3;
+    t_evento* novo_evento;evento = cria_evento(descricao, tempo, prioridade);   
+    evento2 = cria_evento(descricao2, tempo2, prioridade2);
+    evento3 = cria_evento(descricao3, tempo3, prioridade3);
     t_evento* teste;
 
     char descricao[40] = {"abacate"};
-    char tempo[40] = {"12/06/2001 15:46"};
+    char tempo[40] = {"12/06/2001 15:45"};
     char prioridade[40] = {"alta"};
 
     char descricao2[40] = {"rodrigo"};
@@ -144,43 +135,22 @@ int main(){
     char tempo3[40] = {"12/06/1995 15:45"};
     char prioridade3[40] = {"alta"};
 
+    evento = cria_evento(descricao, tempo, prioridade);   
+    evento2 = cria_evento(descricao2, tempo2, prioridade2);
+    evento3 = cria_evento(descricao3, tempo3, prioridade3);
 
     agenda = criar_agenda(imprimir_evento, compara_eventos);
 
-    evento = cria_evento(descricao, tempo, prioridade);   
-    chave = cria_evento(descricao, tempo, prioridade);
-    evento2 = cria_evento(descricao2, tempo2, prioridade2);
-    novo_evento = cria_evento(descricao3, tempo3, prioridade3);
-
 
     agendar_evento(agenda, evento);
-    agendar_evento(agenda,evento2);
+    agendar_evento(agenda, evento2);
+    agendar_evento(agenda, evento3);
 
-    // remove_elem(agenda->eventos, chave);
-
-    imprimir_lse(agenda->eventos);
-
-    printf("%d\n", quantificar_evento(agenda));
-
-    printf("\nProximo evento\n");
+    printf("%d\n",quantificar_evento(agenda));
+    
     proximo_evento(agenda);
 
-    printf("\nEvento cancelado\n");
-
-    teste = cancelar_evento(agenda, chave);
-    imprimir_evento(teste);
-
-    printf("\nSua agenda atual\n");
     imprimir_lse(agenda->eventos);
-
-    alterar_evento(agenda, chave, novo_evento);
-    printf("\nEvento alterado\n");
-    imprimir_lse(agenda->eventos);
-
-
-    concluir_evento(agenda);
-    printf("\neventos atuais\n");
-    imprimir_lse(agenda->eventos); 
 
     return 0;
 }

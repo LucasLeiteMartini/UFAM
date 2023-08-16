@@ -1,5 +1,6 @@
-#include <stdio.h>
-#include <stdlib.h>
+#include "stdio.h"
+#include "stdlib.h"
+#include "math.h"
 #include "heap.h"
 
 struct heap{
@@ -47,8 +48,14 @@ void* remove_heap(t_heap* heap){
     }
 }
 
-sobe_heap(void* elems[], int i, t_heap_comparar compara){
-    
+sobe_heap(void* elems[], int i, t_heap_comparar* compara){
+    if(i>0){
+        int anc_i = (int)floor((i-1)/2);
+        if(compara(elems[anc_i],elems[i])<0){
+            trocar(elems,anc_i,i);
+            sobe_heap(elems,anc_i,compara);
+        }
+    }
 }
 
 void inserir_heap(t_heap* heap, void* elem){

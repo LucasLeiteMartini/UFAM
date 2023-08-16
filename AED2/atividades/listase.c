@@ -98,13 +98,31 @@ void* remover_lse(t_lse* lse){
 
 void* acessar_com_comparacao(t_lse* lse, void* carga){
     t_elemento_lse* cam = lse->inicio;
-    while( (cam->prox) && (lse->comparar(cam->prox->carga_util, carga) != 0)){
+    while( (cam->prox) && (lse->comparar(cam->prox->carga_util, carga) < 0)){
         cam = cam->prox;
     }
 
     return cam->prox->carga_util;
 
 }
+
+void inserir_posicao(t_lse* lse, void* carga) {
+    t_elemento_lse* novo_elemento = criar_elemento_lse(carga);
+
+    if(lse->inicio == NULL || lse->comparar(lse->inicio->carga_util, carga) > 0){
+    novo_elemento->prox = lse->inicio;
+    lse->inicio = novo_elemento;
+    }else{
+        t_elemento_lse* cam = lse->inicio;
+        while((cam->prox) && lse->comparar(cam->prox->carga_util, novo_elemento->carga_util) < 0){
+            cam = cam->prox;
+        }
+        novo_elemento->prox = cam->prox;
+        cam->prox = novo_elemento;
+    }
+
+}
+
 
 void* remove_elem(t_lse* lse, void* chave){
 
