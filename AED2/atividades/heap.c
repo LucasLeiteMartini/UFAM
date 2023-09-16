@@ -1,32 +1,13 @@
-#include "stdio.h"
 #include "stdlib.h"
 #include "math.h"
 #include "heap.h"
 
 struct heap{
-    void* elems;
+    void* *elems;
     int tamanho;
     int ocupacao;
     t_heap_comparar comparar;
 };
-
-typedef struct heap t_heap;
-
-t_heap* criar_heap(int tamanho, t_heap_comparar compara){
-    t_heap* heap = malloc(sizeof(t_heap));
-    heap->elems = malloc(sizeof((void*)tamanho));
-    heap->tamanho = tamanho;
-    heap->ocupacao = 0;
-    heap->comparar = compara;
-}
-
-void primeiro_heap(t_heap* heap){
-    void* elem = NULL;
-    if(heap->ocupacao > 0){
-        elem = heap->elems[0];
-    }
-    return elem;
-}
 
 static void trocar(void* elems[], int i, int j){
     void* aux = elems[i];
@@ -34,26 +15,58 @@ static void trocar(void* elems[], int i, int j){
     elems[j] = aux;
 }
 
-void desce_heap(void* elems[], int j, t_heap_comparar compara){
+t_heap* criar_heap(int tamanho, t_heap_comparar comparar){
+    t_heap* heap = malloc(sizeof(t_heap));
+    heap->elems = malloc(sizeof(void*)*tamanho);
+    heap->tamanho = tamanho;
+    heap->ocupacao = 0;
+    heap->comparar = comparar;
 
+    return heap;
 }
 
-void* remove_heap(t_heap* heap){
+void* primeiro_heap(t_heap* heap){
     void* elem = NULL;
-    if(heap->ocupacao > 0){
+    if (heap->ocupacao > 0){
         elem = heap->elems[0];
-        trocar(heap->elems, 0, heap->ocupacao-1);
-        heap->ocupacao--;
-        desce_heap(heap->elems, 0, heap->comparar);
+    }
+    return elem;
+}
+
+static void desce_heap(void* elems[], int ocupa, int i, t_heap_comparar comparar){
+    int imaior = i;
+    
+    if ( (2*i+1 < ocupa) && (comparar(elems[imaior],elems[2*i+1])<0) ){
+        imaior = 2*i + 1;
+    }
+    if ( (2*i+2 < ocupa) && (comparar(elems[imaior],elems[2*i+2])<0) ){
+        imaior = 2*i + 2;
+    }
+    if (imaior != i){
+        trocar(elems,imaior,i);
+        desce_heap(elems, ocupa, imaior,comparar);
     }
 }
 
-sobe_heap(void* elems[], int i, t_heap_comparar* compara){
-    if(i>0){
+void* remover_heap(t_heap* heap){
+    void* elem = NULL;
+    if (heap->ocupacao > 0){
+        elem = heap->elems[0];
+        heap->ocupacao--;
+        if (heap->ocupacao>=1){
+            trocar(heap->elems,0,heap->ocupacao);
+            desce_heap(heap->elems, heap->ocupacao, 0,  heap->comparar);
+        }
+    }    
+    return elem;
+}
+
+void sobe_heap(void* elems[], int i, t_heap_comparar comparar){
+    if (i > 0){
         int anc_i = (int)floor((i-1)/2);
-        if(compara(elems[anc_i],elems[i])<0){
+        if (comparar(elems[anc_i],elems[i])<0){
             trocar(elems,anc_i,i);
-            sobe_heap(elems,anc_i,compara);
+            sobe_heap(elems,anc_i,comparar);
         }
     }
 }
@@ -62,4 +75,11 @@ void inserir_heap(t_heap* heap, void* elem){
     heap->elems[heap->ocupacao] = elem;
     sobe_heap(heap->elems, heap->ocupacao, heap->comparar);
     heap->ocupacao++;
+
+}
+
+void alterar_heap(t_heap* heap, void* chave, void* elem){
+    // bsucar_sequencial
+    // sobe ou desce
+    
 }
