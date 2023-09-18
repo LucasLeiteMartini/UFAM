@@ -68,7 +68,7 @@ void imprimir_evento(void* carga){
         printf("%s %s %s\n",  evento->tempo,evento->descricao, evento->prioridade);
 }
 void concluir_evento(t_agenda* agenda){
-    remover_lse(agenda->eventos);
+    remover_inicio_lse(agenda->eventos);
     agenda->tamanho--;
 }
 

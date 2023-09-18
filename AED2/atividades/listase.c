@@ -15,8 +15,6 @@ t_elemento_lse* criar_elemento_lse(void* carga_util){
     novo->carga_util = carga_util;
     novo->prox = NULL;
 
-    printf("Criando: %p %p %p\n", novo, novo->carga_util, novo->prox);
-
     return novo;
 }
 
@@ -30,6 +28,10 @@ struct lse{
     t_comparar_lse comparar;
 
 };
+
+t_elemento_lse* ultimo(t_lse* lse){
+    return lse->fim;
+}
 
 t_lse* criar_lse(t_imprimir_lse imprimir, t_comparar_lse comparar){
     t_lse *l = malloc(sizeof(t_lse));
@@ -53,21 +55,51 @@ void inserir_lse(t_lse* lse, void* carga_util){
     lse->tamanho++;
 }
 
-void inserir_final_lse(t_lse* lse, void* carga_util){
-    
-    t_elemento_lse* novo = criar_elemento_lse(carga_util);
-
-    if (lse->inicio == NULL){
-        lse->inicio = lse->fim = novo;
-    }else{
-       lse->fim->prox = novo;
-        lse->fim = novo;
+void insercao_conteudo_lse(t_lse* lse, void* carga){
+    if(lse){
+        if(lse->inicio == NULL){
+            inserir_lse(lse, carga);
+        }
+        else{
+            t_elemento_lse* cam = lse->inicio;
+            if(lse->comparar(cam->carga_util, carga) > 0){
+                inserir_lse(lse, carga);
+            }
+            else{
+                while((cam->prox != NULL) && (lse->comparar(cam->prox->carga_util, carga) < 0)){
+                    cam = cam->prox;
+                }
+                if(cam->prox == NULL){
+                    inserir_final_lse(lse, carga);
+                }
+                else{
+                    t_elemento_lse* novo = criar_elemento_lse(carga);
+                    novo->prox = cam->prox;
+                    cam->prox = novo;
+                    
+                }
+            }
+        }
     }
-    lse->tamanho++;
+    
 
 }
 
-void* remover_inicio_lse(t_lse* lse){
+
+void inserir_final_lse(t_lse* lse, void*carga_util){
+    t_elemento_lse* novo = criar_elemento_lse(carga_util);
+
+    if(!lse->inicio){
+        lse->inicio=lse->fim=novo;
+    }
+    else{
+        lse->fim->prox = novo;
+        lse->fim = novo;
+    }
+    lse->tamanho++;
+}
+
+void* remover_lse(t_lse* lse){
     void* carga_util = NULL;
     t_elemento_lse *removivel = lse->inicio;
     if (lse->inicio != NULL){
@@ -78,35 +110,6 @@ void* remover_inicio_lse(t_lse* lse){
     }
     return carga_util;
 }
-
-void* remover_lse(t_lse* lse, void* chave){
-    t_elemento_lse* cam = lse->inicio;
-    t_elemento_lse* ant = NULL;
-    
-    while( (cam!=NULL) && (lse->comparar(cam->carga_util , chave)!=0)){
-        ant = cam;
-        cam = cam->prox;
-    }
-
-    void* carga = NULL;
-    if (cam != NULL){
-        carga = cam->carga_util;
-        if (cam == lse->inicio){ // inicio?
-            lse->inicio = cam->prox;
-            if (cam->prox == NULL)
-                lse->fim=NULL;
-        }else{
-            ant->prox = cam->prox;
-            if (cam->prox == NULL)
-                lse->fim = ant;
-        }
-        free(cam);
-        lse->tamanho--;
-    }
-    return carga; 
-
-}
-
 
 void* acessar_lse(t_lse* lse, int pos){
     pos = (pos>lse->tamanho?pos%lse->tamanho:pos);
@@ -132,14 +135,69 @@ void imprimir_lse(t_lse *lse){
     }
 }
 
-void* buscar_lse(t_lse* lse, void* chave){
-    t_elemento_lse* cam=lse->inicio;
+void imprimir_unico_lse(t_lse* lse, void* carga_util){
+    lse->imprimir(carga_util);
+}
 
-    while( (cam!=NULL) && (lse->comparar(cam->carga_util, chave)!=0)){
-        cam = cam->prox;
+int tamanho_lse(t_lse* lse){
+    if(lse){return lse->tamanho;}
+}
+
+void* primeiro_lse(t_lse* lse){
+    if(lse){
+        if(lse->inicio){
+            return lse->inicio->carga_util;
+        }
+        else{return NULL;}
     }
-    if (cam != NULL)
-        return cam->carga_util;
-    else
+}
+
+void* procurar_lse(t_lse* lse, void* carga_util){
+    t_elemento_lse* procurador;
+    if(lse && lse->inicio){
+        procurador = lse->inicio;
+        while (procurador)
+        {
+            if(lse->comparar(procurador->carga_util, carga_util) == 0){
+                return procurador->carga_util;
+            }
+            else{
+                procurador = procurador->prox;
+            }
+        }
         return NULL;
+        
+    }
+}
+
+void* remover_procurado_lse(t_lse* lse, void* carga){
+    t_elemento_lse* procurador;
+    if(lse && lse->inicio){
+        procurador = lse->inicio;
+        if(lse->comparar(procurador->carga_util, carga) == 0){
+            remover_lse(lse);
+        }
+        else{
+            while (procurador->prox)
+            {
+                if(lse->comparar(procurador->prox->carga_util, carga) == 0){
+                    break;
+                }
+                else{
+                    procurador = procurador->prox;
+                }
+            }
+            if(!procurador->prox){
+                return NULL;
+            }
+            else{
+                t_elemento_lse* eliminado = procurador->prox;
+                procurador->prox = eliminado->prox;
+                void* carga_util = eliminado ->carga_util;
+                free(eliminado);
+            }
+        }
+        
+        
+    }
 }

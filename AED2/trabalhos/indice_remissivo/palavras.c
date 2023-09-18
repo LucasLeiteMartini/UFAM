@@ -115,6 +115,33 @@ double tf_idf(double tf, double idf)
 
 }
 
+void imprimir_pagina(t_paginas *pag)
+{
+    if (pag->repeticao > 1)
+    {
+        printf("Página %d, %d vezes\n", pag->pag, pag->repeticao);
+    }
+    else
+    {
+        printf("Página %d, %d vez\n", pag->pag, pag->repeticao);
+    }
+}
+
+// Mostra todas as paginas e as ocorrencias de uma palavra
+void infoPalavra(t_lse *lista)
+{
+    int pos = tamanhoLSE(lista);
+    t_paginas *pag;
+
+    while (pos > 0)
+    {
+        pag = acessarLSE(lista, pos);
+        imprimirPagina(pag);
+        pos--;
+    }
+}
+
+
 void leituraPalavras(t_geral *geral, FILE *arquivo)
 {
     FILE *aux = fopen("Auxiliares/palavras_e_chaves.txt", "w");
