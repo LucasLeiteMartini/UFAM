@@ -130,13 +130,13 @@ void imprimir_pagina(t_paginas *pag)
 // Mostra todas as paginas e as ocorrencias de uma palavra
 void infoPalavra(t_lse *lista)
 {
-    int pos = tamanhoLSE(lista);
+    int pos = tamanho_lse(lista);
     t_paginas *pag;
 
     while (pos > 0)
     {
-        pag = acessarLSE(lista, pos);
-        imprimirPagina(pag);
+        pag = acessar_lse(lista, pos);
+        imprimir_pagina(pag);
         pos--;
     }
 }
@@ -168,7 +168,7 @@ void leituraPalavras(t_geral *geral, FILE *arquivo)
                 geral->qtdPalavras ++;
                 total_de_palavras_pg ++;
 
-                if (buscar_DD(dicio, chave) == NULL)
+                if (consultar_dd(dicio, chave) == NULL)
                 {
                     t_cabecalho* cabecalho = cria_cabecalho(palavra);
                     inserir_vd(todas_palavras, cabecalho);
@@ -258,3 +258,15 @@ void leituraPalavras(t_geral *geral, FILE *arquivo)
 
 }
 
+
+void busca_por_letra(t_cabecalho* cabecalho, char *letra){
+
+    while(cabecalho){
+        if(cabecalho->palavras){
+            if(strcmp(&cabecalho->palavras->nome[0], letra) == 0){
+                printf("%s", cabecalho->palavras->nome);
+            }
+        }
+        cabecalho = cabecalho->prox;
+    }
+}
