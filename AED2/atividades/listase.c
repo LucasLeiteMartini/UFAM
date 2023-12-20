@@ -18,8 +18,7 @@ t_elemento_lse* criar_elemento_lse(void* carga_util){
     return novo;
 }
 
-typedef struct lse t_lse;
-struct lse{
+typedef struct lse{
     t_elemento_lse* inicio;
     t_elemento_lse* fim;
     int tamanho;
@@ -27,7 +26,7 @@ struct lse{
     t_imprimir_lse imprimir;
     t_comparar_lse comparar;
 
-};
+}t_lse;
 
 t_elemento_lse* ultimo(t_lse* lse){
     return lse->fim;
@@ -109,6 +108,20 @@ void* remover_lse(t_lse* lse){
         lse->tamanho--;
     }
     return carga_util;
+}
+
+void* remove_inicio_lse(t_lse* lse){
+    void* carga_util;
+    if(lse->inicio){
+        carga_util = lse->inicio->carga_util;
+        t_elemento_lse* aux = lse->inicio;
+        lse->inicio = aux->prox;
+        free(aux);
+        lse->tamanho--;
+        return carga_util;
+    }else{
+        return NULL;
+    }
 }
 
 void* acessar_lse(t_lse* lse, int pos){
@@ -201,3 +214,4 @@ void* remover_procurado_lse(t_lse* lse, void* carga){
         
     }
 }
+
