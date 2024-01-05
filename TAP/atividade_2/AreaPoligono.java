@@ -24,14 +24,13 @@ public class AreaPoligono {
 
         double soma = 0.0;
 
-        for(int i = 0; i < xArrayList.size() - 2; i++){
-            int nextIndex = (i + 1) % xArrayList.size();
-            soma += (xArrayList.get(nextIndex) + xArrayList.get(i)) * (yArrayList.get(nextIndex) - yArrayList.get(i));
+        for(int i = 0; i < xArrayList.size() - 1; i++){
+            soma += (xArrayList.get(i+1) + xArrayList.get(i)) * (yArrayList.get(i+1) - yArrayList.get(i));
         }
 
-        soma = Math.abs(soma);
+        soma = 0.5 * Math.abs(soma);
 
-        System.out.printf(Locale.US,"%.4f\n", (soma/2));
+        System.out.printf(Locale.US,"%.4f\n", soma);
 
     scan.close();
     }
