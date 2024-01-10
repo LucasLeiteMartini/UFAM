@@ -18,7 +18,7 @@ public class RotaOrtodromica {
 
         double d = r * Math.acos((Math.sin(radT1) * Math.sin(radT2)) + ((Math.cos(radT1) * Math.cos(radT2)) * Math.cos(radG1 - radG2)));
 
-        System.out.printf("A distancia entre os pontos (%.6f, %.6f) e (%.6f, %.6f) e de %.2f km\nS", t1, g1, t2, g2, d);
+        System.out.printf("A distancia entre os pontos (%.6f, %.6f) e (%.6f, %.6f) e de %.2f km\n", t1, g1, t2, g2, d);
 
 
     scan.close();
