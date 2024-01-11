@@ -1,43 +1,52 @@
+import java.util.ArrayList;
 import java.util.Scanner;
 
-public class DiaSemana {
+
+public class DiaSemana{
     public static void main(String[] args) {
-        Scanner scanner = new Scanner(System.in);
+        ArrayList<Integer> workLoadArrayList = new ArrayList<>();
+        Scanner scan = new Scanner(System.in);
 
-        int[] cargaTotalPorDia = new int[7];
-        int count = 0;
+        int a;
 
-        // Leitura das cargas horárias e cálculo da carga total por dia
-        while (scanner.hasNextInt()) {
-            for (int i = 0; i < 7; i++) {
-                if (scanner.hasNextInt()) {
-                    cargaTotalPorDia[i] += scanner.nextInt();
-                    count++;
-                } else {
-                    break; // Encerra o loop interno se não houver mais entrada
-                }
+        while((a  = scan.nextInt()) != -1){
+            workLoadArrayList.add(a);
+        }
+        
+        int tot = workLoadArrayList.size() / 7;
+
+        int[][] employeeMatrix = new int[tot][7];
+
+        for(int i = 0; i < tot; i++){
+            for(int j = 0; j < 7; j++){
+                employeeMatrix[i][j] = workLoadArrayList.get((i*7) + j);
             }
         }
 
-        // Verifica se há entrada suficiente para todos os dias da semana
-        if (count % 7 != 0) {
-            System.err.println("Entrada insuficiente para todos os dias da semana.");
-            System.exit(1); // Encerra o programa com código de erro
+        int dailyWorkload;
+
+        workLoadArrayList = new ArrayList<>();
+
+        for(int j = 0; j < 7; j++){
+            dailyWorkload = 0;
+            for(int i = 0; i < tot; i++){
+                dailyWorkload += employeeMatrix[i][j];
+            }
+            workLoadArrayList.add(dailyWorkload);
         }
 
-        // Encontrar a maior carga horária total
-        int maxCargaHoraria = cargaTotalPorDia[0];
-        for (int cargaHorariaDia : cargaTotalPorDia) {
-            maxCargaHoraria = Math.max(maxCargaHoraria, cargaHorariaDia);
+        dailyWorkload = workLoadArrayList.get(0);
+
+        for(int i = 0; i < workLoadArrayList.size(); i++){
+            dailyWorkload = Math.max(dailyWorkload, workLoadArrayList.get(i));
         }
 
-        // Imprimir os dias da semana com a maior carga horária total
-        for (int i = 0; i < 7; i++) {
-            if (cargaTotalPorDia[i] == maxCargaHoraria) {
-                System.out.println(i);
+        for(int i = 0; i < workLoadArrayList.size(); i++){
+            if(workLoadArrayList.get(i) == dailyWorkload){
+                System.out.println(i+1);
             }
         }
 
-        scanner.close();
+scan.close();
     }
 }
