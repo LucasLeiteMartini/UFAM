@@ -6,8 +6,7 @@ public class RaizDois {
 
         int n = scan.nextInt();
 
-        double x = expansaoContinua(n);
-
+        expansaoContinua(n);
         
         scan.close();
     }
@@ -24,7 +23,7 @@ public class RaizDois {
 
     static double expansaoContinua(int n) {
         double a = 1.0+1.0/recursaoContinua(n-1);
-        System.out.printf("%.14f\n", a);a
+        System.out.printf("%.14f\n", a);
         return a;
     }
 }
