@@ -5,7 +5,7 @@ public class Turma {
     int ano;
     int semestre;
     Professor professor = new Professor();
-    ArrayList<Aluno> alunos = new ArrayList<>();
+    ArrayList<Aluno> alunos;
 
     Turma(String disciplina, int ano, int semestre, Professor professor){
         this.disciplina = disciplina;
