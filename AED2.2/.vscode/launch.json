@@ -1,0 +1,29 @@
+{
+    "arquivos": [
+      {
+        "nome": "tocador.c",
+        "caminho": "UFAM/AED2.2/tocador.c",
+        "debug": true
+      },
+      {
+        "nome": "listase.c",
+        "caminho": "UFAM/AED2.2/listase.c",
+        "debug": true
+      },
+      {
+        "nome": "pilha.c",
+        "caminho": "UFAM/AED2.2/pilha.c",
+        "debug": true
+      },
+      {
+        "nome": "fila.c",
+        "caminho": "UFAM/AED2.2/fila.c",
+        "debug": true
+      }
+    ],
+    "configuracoes": {
+      "modo": "debug",
+      "nivel": 2
+    }
+  }
+  

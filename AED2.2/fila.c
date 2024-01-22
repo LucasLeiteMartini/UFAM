@@ -3,14 +3,14 @@
 #include "listase.h"
 #include "fila.h"
 
-struct fila{
+typedef struct fila{
     t_lse* elementos;
     int tamanho;
-};
+}t_fila;
 
-t_fila* criar_fila(int tamanho){
+t_fila* criar_fila(){
     t_fila* f = malloc(sizeof(t_fila));
-    f->tamanho = tamanho;
+    f->tamanho = 0;
     f->elementos = criar_lse(NULL,NULL);
     return f;
 }
