@@ -89,6 +89,9 @@ public class Turma {
     }
 
 
+    	int getNumAlunos() {
+    		return this.numAlunos;
+    	}
     
     	String getHorariosString() {
     		return getHorario(this.horarios);

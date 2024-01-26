@@ -23,5 +23,8 @@ public class Sala{
         return "Bloco " + this.bloco + ", Sala " + this.sala + " (" + this.capacidade + " lugares, não acessível)";
     }
 
-
+    int getCapacidade() {
+    	return this.capacidade;
+    }
+    
 }
