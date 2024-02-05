@@ -120,7 +120,7 @@ void loading_tocador(t_tocador *t){
 
 
 void resume_tocador(t_tocador *t){
-    if(t->status != PAUSE){
+    if(t->status == PAUSE){
         printf("Retomando\n");
         imprimir_musica(t->faixa_carregada);
         t->status = RESUME;}

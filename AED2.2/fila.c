@@ -34,6 +34,12 @@ int tamanho_fila(t_fila* f){
     return f->tamanho;
 }
 
+void* acessar_fila(t_fila* f, int pos){
+    void* elem = acessar_lse(f->elementos, pos);
+
+    return elem;
+
+}
 
 void* primeiro_fila(t_fila* f){
 	void* carga = NULL;
