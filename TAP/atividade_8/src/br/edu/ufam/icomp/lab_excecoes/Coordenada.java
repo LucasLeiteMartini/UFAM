@@ -27,9 +27,8 @@ public class Coordenada {
 	}
 	
 	public double distancia(Coordenada coordenada){
-		double dist;
-		
-		dist = Math.sqrt(Math.pow((this.posX - coordenada.getPosX()), 2) + Math.pow((this.posY - coordenada.getPosY()), 2));  
+		double dist = 0.0;
+		if(coordenada != null) dist = Math.sqrt(Math.pow((this.posX - coordenada.posX), 2) + Math.pow((this.posY - coordenada.posY), 2));  
 		
 		return dist;
 	}

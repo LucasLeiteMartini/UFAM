@@ -24,29 +24,45 @@ public class Caminho {
 	
 	}
 	
-	void addCoordenada(Coordenada coordenada) throws TamanhoMaximoExcedidoException, DistanciaEntrePontosExcedidaException{
-		if(this.tamanho > this.caminho.length) throw new TamanhoMaximoExcedidoException();
+	
+	Coordenada getUltima() {
+		int i = 0;
+		while(this.caminho[i] != null) {
+			i++;
+		}
+		if(i > 0)return this.caminho[i-1];
+		else return this.caminho[i];
+	}
+	
+	public void addCoordenada(Coordenada coordenada) throws TamanhoMaximoExcedidoException, DistanciaEntrePontosExcedidaException{
+		Coordenada ult = getUltima();
+		
+		if(this.tamanho >= this.caminho.length - 1) throw new TamanhoMaximoExcedidoException();
 		else {
-			
+			if(coordenada.distancia(ult) > 15) throw new DistanciaEntrePontosExcedidaException();
+			else {
+				this.caminho[this.tamanho] = coordenada; 
+				this.tamanho++;
+			}
 		}
 	}
 	
 	public String toString() {
-		int cont = 0;
+		int cont = 0, i = 0;
+		String str = "Dados do caminho:\n" + "  - Quantidade de pontos: " + cont + "\n" + "  - Pontos:\n";
 		if(this.caminho.length > 0) {
-			for(Coordenada coord : this.caminho) {			
+			while(cont < this.caminho.length && this.caminho[cont] != null) {
 				cont++;
 			}
 			
-			String str = "Dados do caminho: \n" + "  - Quantidade de pontos: " + cont + "\n" + "  - Pontos:\n";
-			
-			for(Coordenada coord : this.caminho) {			
-				str += "	-> " + coord.toString();
+			str = "Dados do caminho:\n" + "  - Quantidade de pontos: " + cont + "\n" + "  - Pontos:\n";
+
+			while(i < this.caminho.length && this.caminho[i] != null) {
+				str += "    -> " + this.caminho[i].toString() + "\n";
+				i++;
 			}
 			
-			return str;
-		}else {
-			return null;
 		}
+		return str;
 	}
 }
