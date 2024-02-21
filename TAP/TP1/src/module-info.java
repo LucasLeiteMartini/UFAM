@@ -4,5 +4,5 @@
 /**
  * 
  */
-module aula_swingFx {
+module TP1 {
 }
