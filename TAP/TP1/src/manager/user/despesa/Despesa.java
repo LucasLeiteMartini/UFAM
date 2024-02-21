@@ -1,4 +1,4 @@
-package banco.user.dispesa;
+package manager.user.despesa;
 
 public class Despesa {
 	public double valor;
@@ -39,7 +39,7 @@ public class Despesa {
 		this.categoria = categoria;
 	}
 	
-	public static void main(String[] args) {
+	/*public static void main(String[] args) {
 		Despesa d1 = new Despesa();
 		
 		d1.setCategoria("Macacada");
@@ -48,5 +48,5 @@ public class Despesa {
 		
 		System.out.println(d1);
 		
-	}
+	}*/
 }

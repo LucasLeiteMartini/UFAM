@@ -1,35 +1,6 @@
-package banco;
-
-public class Usuario {
-
-	protected String nome;
-	protected int senha;
-	protected double saldo;
-	protected double rendimento;
-	protected int numConta;
-	
-	public double getSaldo() {
-		return this.saldo;
-	}
-		
-	public double getRendimento() {
-		return this.rendimento;
-	}
-	
-	public String getNome() {
-		return this.nome;
-	}
-	
-	protected int getNumConta() {
-		return this.numConta;
-	}
-	
-}
-
-package banco;
+package banco.user.dispesa;
 
 public class Despesa {
-	
 	public double valor;
 	public String data;
 	public String categoria;
@@ -68,7 +39,7 @@ public class Despesa {
 		this.categoria = categoria;
 	}
 	
-	public static void main(String[] args) {
+	/*public static void main(String[] args) {
 		Despesa d1 = new Despesa();
 		
 		d1.setCategoria("Macacada");
@@ -77,8 +48,33 @@ public class Despesa {
 		
 		System.out.println(d1);
 		
-	}
+	}*/
+}
 
+package banco.user;
+
+public class User {
+	protected String nome;
+	protected int senha;
+	protected double saldo;
+	protected double rendimento;
+	protected int numConta;
 	
+	public double getSaldo() {
+		return this.saldo;
+	}
+		
+	public double getRendimento() {
+		return this.rendimento;
+	}
+	
+	public String getNome() {
+		return this.nome;
+	}
+	
+	protected int getNumConta() {
+		return this.numConta;
+	}
 	
 }
+

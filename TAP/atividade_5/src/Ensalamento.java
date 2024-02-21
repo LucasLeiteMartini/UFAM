@@ -1,5 +1,3 @@
-import java.util.Comparator;
-import java.util.Collections;
 import java.util.ArrayList;
 
 public class Ensalamento {
@@ -7,7 +5,7 @@ public class Ensalamento {
 	ArrayList<Sala> salas;
 	ArrayList<Turma> turmas;
 	ArrayList<TurmaEmSala> ensalamento;
-	
+
 	Ensalamento(){
 		this.salas = new ArrayList<Sala>();
 		this.ensalamento = new ArrayList<TurmaEmSala>();
@@ -40,19 +38,6 @@ public class Ensalamento {
 			}else {
 				return 0;
 			}
-		}
-	}
-	
-	public int comparaTurmaEmSala(TurmaEmSala ts1, ArrayList<TurmaEmSala> ensalamento) {
-		if(ts1 == null || ensalamento == null) {
-			return 0;
-		}else {
-			for(TurmaEmSala ts2 : ensalamento) {
-				if(comparaSala(ts1.sala, ts2.sala) == 1 && comparaTurma(ts1.turma, ts2.turma) == 1) {
-					return 1;
-				}
-			}
-			return 0;
 		}
 	}
 	
@@ -116,7 +101,7 @@ public class Ensalamento {
 		}else {
 			if(turma.acessivel && sala.acessivel && turma.numAlunos <= sala.capacidade && salaDisponivel(sala, turma.horarios)) {
 				TurmaEmSala ts1 = new TurmaEmSala(turma, sala);
-				ensalamento.add(ts1);
+				this.ensalamento.add(ts1);
 				return true;
 			}
 		}
@@ -125,35 +110,100 @@ public class Ensalamento {
 	
 	public void alocarTodas() {
         for (Turma turma : turmas) {
-            Sala salaDisponivel = encontrarSalaDisponivel(turma);
 
-            if (salaDisponivel != null) {
-                alocar(turma, salaDisponivel);
-            }
         }
     }
 
-	private Sala encontrarSalaDisponivel(Turma turma) {
-	    for (Sala sala : salas) {
-	        if (sala.acessivel && turma.numAlunos <= sala.capacidade && salaDisponivelConsecutivo(sala, turma.horarios)) {
-	            return sala;
-	        }
-	    }
-	    return null; // Retorna null se nenhuma sala disponível for encontrada
+
+	public int getTotalTurmasAlocadas() {
+		int totalTurmasAlocadas = 0;
+		
+		for(TurmaEmSala turma : this.ensalamento) {
+			if(turma != null) {
+				totalTurmasAlocadas ++;
+			}
+		}
+		return totalTurmasAlocadas;
+	}
+	
+	
+	public int getTotalEspacoLivre() {
+		int totalEspacoLivre = 0;
+		
+		for(TurmaEmSala turmaEmSala : this.ensalamento) {
+			if(turmaEmSala.sala != null) {
+				int espacoLivre = turmaEmSala.sala.capacidade - turmaEmSala.turma.numAlunos;
+				totalEspacoLivre += espacoLivre;
+			}
+		}
+		return totalEspacoLivre;
+	}
+	public String relatorioResumoEnsalamento() {
+        int totalSalas = salas.size();
+        int totalTurmas = turmas.size();
+        int turmasAlocadas = getTotalTurmasAlocadas();
+        int espacosLivres = getTotalEspacoLivre();
+
+        StringBuilder resumo = new StringBuilder();
+        resumo.append("Total de Salas: ").append(totalSalas).append("\n");
+        resumo.append("Total de Turmas: ").append(totalTurmas).append("\n");
+        resumo.append("Turmas Alocadas: ").append(turmasAlocadas).append("\n");
+        resumo.append("Espaços Livres: ").append(espacosLivres).append("\n\n");
+
+        return resumo.toString();
+    }
+
+	boolean checaAlocamentoSala(Sala s1) {
+		for(TurmaEmSala a : this.ensalamento) {
+			if(comparaSala(a.sala, s1) == 1) {
+				return false;
+			}
+		}
+		return true;
+	}
+	
+	public String relatorioTurmasPorSala() {
+		String str = relatorioResumoEnsalamento();
+	
+		if (this.ensalamento.size() > 0) {
+			for (TurmaEmSala a : this.ensalamento) {
+				str += "--- " + a.sala.getDescricao() + "---\n" + a.turma.getDescricao();
+			}
+		}
+		for(Sala s1 : this.salas) {				
+			if(checaAlocamentoSala(s1)) {
+				str += "--- " + s1.getDescricao() + " ---\n";
+			}
+		}
+		return str;
+	}
+	
+	boolean checaAlocamentoTurma(Turma t1){
+		for(TurmaEmSala a : this.ensalamento) {
+			if(comparaTurma(a.turma, t1) == 1) {
+				return false;
+			}
+		}
+		return true;
+	}
+	
+	public String relatorioSalasPorTurma() {
+		String str = relatorioResumoEnsalamento();
+
+		if(this.ensalamento.size() > 0) {			
+			for(TurmaEmSala a : this.ensalamento) {
+				str += a.turma.getDescricao() + "Sala: " + a.sala.getDescricao() + "\n";
+			}
+		}else{
+			for(Turma t1 : this.turmas){
+				if(checaAlocamentoTurma(t1)) {
+					str += t1.getDescricao() + "Sala: SEM SALA\n";
+				}
+			}
+		}
+		
+
+		return str;
 	}
 
-	private boolean salaDisponivelConsecutivo(Sala sala, ArrayList<Integer> horarios) {
-	    for (int horario : horarios) {
-	        if (!salaDisponivel(sala, horario)) {
-	            return false;
-	        }
-	    }
-	    return true;
-	}
-
-//	int getTotalTurmas();
-//	int getTotalEspacoLivre();
-//	String relatorioResumoEnsalamento();
-//	String relatorioTurmasPorSala();
-//	String relatorioSalasPorTurma();
 }
