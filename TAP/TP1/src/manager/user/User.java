@@ -2,11 +2,23 @@ package manager.user;
 
 public class User {
 	protected String nome;
-	protected int senha;
+	private int senha;
 	protected double saldo;
 	protected double rendimento;
-	protected int numConta;
+	private int numConta;
 	
+    public User(){
+        this(null, 0, 0.0, 0.0, 0);
+    }
+
+    public User(String nome, int senha, double saldo, double rendimento, int numConta){
+        setNome(nome);
+        setSenha(senha);
+        setSaldo(saldo);
+        setRendimento(rendimento);
+        setNumConta(numConta);
+    }
+
 	public double getSaldo() {
 		return this.saldo;
 	}
@@ -34,7 +46,6 @@ public class User {
     public void setSaldo(double saldo){
         this.saldo = saldo;
     }
-		
 	
     public void setNome(String nome){
         this.nome = nome;
