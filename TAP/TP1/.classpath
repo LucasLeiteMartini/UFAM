@@ -3,4 +3,7 @@
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
 	<classpathentry kind="src" path="src"/>
 	<classpathentry kind="output" path="bin"/>
+
+	<classpathentry kind="lib" path="/usr/share/java/mariadb-java-client.jar"/>
+
 </classpath>
