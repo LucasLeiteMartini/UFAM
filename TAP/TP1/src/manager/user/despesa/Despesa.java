@@ -1,9 +1,10 @@
 package manager.user.despesa;
 
 public class Despesa {
-	public double valor;
-	public String data;
-	public String categoria;
+	private int id;
+	private double valor;
+	private String data;
+	private String categoria;
 	
 	public Despesa() {
 		this(0.0, null, null);
@@ -15,6 +16,10 @@ public class Despesa {
 		setCategoria(categoria);
 	}
 	
+	public int getId(){
+		return this.id;
+	}
+
 	public double getValor() {
 		return this.valor;
 	}
@@ -27,6 +32,10 @@ public class Despesa {
 		return this.categoria;
 	}
 	
+	public void setId(int id){
+		this.id = id;
+	}
+
 	public void setValor(double valor) {
 		this.valor = valor;
 	}

@@ -1,12 +1,16 @@
 package manager.user;
 
+import manager.user.despesa.Despesa;
+
 public class User {
-	protected String nome;
+    private int id;
+	private String nome;
 	private int senha;
-	protected double saldo;
-	protected double rendimento;
+	private double saldo;
+	private double rendimento;
 	private int numConta;
-	
+	private Despesa[] despesas;
+
     public User(){
         this(null, 0, 0.0, 0.0, 0);
     }
@@ -17,6 +21,10 @@ public class User {
         setSaldo(saldo);
         setRendimento(rendimento);
         setNumConta(numConta);
+    }
+
+    public int getID(){
+        return this.id;
     }
 
 	public double getSaldo() {
@@ -39,6 +47,10 @@ public class User {
         return this.senha;
     }
     
+    public void setId(int id){
+        this.id = id;
+    }
+
     public void setRendimento(double rendimento){
         this.rendimento = rendimento;
     }
