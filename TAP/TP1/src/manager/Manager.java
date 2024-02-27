@@ -1,99 +1,84 @@
 package manager;
+import manager.*;
 import java.awt.*;
-import java.awt.event.*;
 import java.security.SecureRandom;
 
 import javax.swing.*;
 
-import manager.user.User;
-
 public class Manager extends JFrame{
 
-    private JTextField nome;
-    private JTextField senha;
-    private JTextField saldo;
-    private JTextField rendimento;
+    
 
-    public Manager(){
-        super("Gestor de Finanças Pessoais");
-        this.setLayout(new FlowLayout());
-        this.setSize(400, 300);
-        this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        JPanel panel = new JPanel(new GridLayout(4,2));
-        panel.setVisible(true);
+    public Manager() {
+        // Configurações básicas do JFrame
+        super("Gestor de Finanças");
+        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        setSize(400, 300);
+        setLocationRelativeTo(null);
 
-        panel.add(new JLabel("Nome completo:"));
-        nome = new JTextField();
-        panel.add(nome);
+        // Criação do JPanel para os componentes
+        JPanel panel = new JPanel(new GridBagLayout());
+        GridBagConstraints gbc = new GridBagConstraints();
+        gbc.insets = new Insets(5, 5, 5, 5); // Espaçamento entre os componentes
 
-        panel.add(new JLabel("Informe seu saldo atual"));
-        saldo = new JTextField();
-        panel.add(saldo);
+        // Adiciona o JPanel ao JFrame
+        add(panel);
 
-        panel.add(new JLabel("Informe seu rendimento:"));
-        rendimento = new JTextField();
-        panel.add(rendimento);
+        // Adiciona botões para operações
+        JButton consultarUsuarioButton = new JButton("Consultar Usuário por ID");
+        consultarUsuarioButton.addActionListener(e -> consultarUsuario());
+        addField(panel, gbc, "", consultarUsuarioButton);
 
+        JButton cadastrarUsuarioButton = new JButton("Cadastrar Usuário");
+        cadastrarUsuarioButton.addActionListener(e -> new CadastrarWindow());
+        addField(panel, gbc, "", cadastrarUsuarioButton);
 
-        JButton cadastraButton = new JButton("Cadastrar");
-        cadastraButton.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e){
-                cadastrar();
-            }
-        });
-        panel.add(cadastraButton);
+        JButton consultarDespesasButton = new JButton("Consultar Despesas por ID de Usuário");
+        consultarDespesasButton.addActionListener(e -> consultarDespesas());
+        addField(panel, gbc, "", consultarDespesasButton);
 
-        this.add(panel);
+        JButton gerirDespesasButton = new JButton("Gerir Despesas");
+        gerirDespesasButton.addActionListener(e -> gerirDespesas());
+        addField(panel, gbc, "", gerirDespesasButton);
+
+        // Torna o JFrame visível
+        setVisible(true);
     }
 
-    public void cadastraUser(){
-        
+    // Método auxiliar para adicionar rótulo e campo ao painel
+    public void addField(JPanel panel, GridBagConstraints gbc, String label, JComponent component) {
+        gbc.gridx = 0;
+        gbc.gridy++;
+        panel.add(new JLabel(label), gbc);
 
+        gbc.gridx = 1;
+        panel.add(component, gbc);
     }
 
-    private int geraConta(int tamanho) {
-        SecureRandom random = new SecureRandom();
-        StringBuilder senha = new StringBuilder();
-
-        for (int i = 0; i < tamanho; i++) {
-            int digito = random.nextInt(10); // Gera um número aleatório de 0 a 9
-            senha.append(digito);
-        }
-
-        return Integer.parseInt(senha.toString());
+    private void consultarUsuario() {
+        // Adicione o código para consultar usuário por ID aqui
+        JOptionPane.showMessageDialog(this, "Consulta de Usuário por ID");
     }
 
-    private User cadastrar(){
-        User user = new User(this.nome.getText(),
-        Integer.parseInt(this.senha.getText()),
-        Double.parseDouble(this.saldo.getText()),
-        Double.parseDouble(this.rendimento.getText()),
-        geraConta(10));
-
-        int confirmacao = JOptionPane.showConfirmDialog(
-                this,
-                "Confirme seus dados:\n\n" +
-                        "Nome: " + user.getNome() + "\n" +
-                        "Saldo: " + user.getSaldo() + "\n" +
-                        "Rendimetno: " + user.getRendimento()+ "\n" +
-                        "Número da conta: " + user.getNumConta(),
-                "Confirmação de Cadastro",
-                JOptionPane.YES_NO_CANCEL_OPTION
-        );
-
-        if(confirmacao == JOptionPane.YES_OPTION){
-            return user;
-        }else if(confirmacao == JOptionPane.NO_OPTION){
-            cadastraUser();
-        }
-        JOptionPane.showConfirmDialog(this, "Cadastro Cancelado");
-        return null;
+    private void consultarDespesas() {
+        // Adicione o código para consultar despesas por ID de usuário aqui
+        JOptionPane.showMessageDialog(this, "Consulta de Despesas por ID de Usuário");
     }
+
+    private void gerirDespesas() {
+        // Adicione o código para gerir despesas aqui
+        JOptionPane.showMessageDialog(this, "Gerenciamento de Despesas");
+    }
+
+    private void cancelar() {
+        JOptionPane.showMessageDialog(this, "Cadastro cancelado.");
+        // Adicione o código para lidar com o cancelamento do cadastro aqui
+        dispose();
+    }
+
+    
 
     public static void main(String[] args) {
         Manager managerWindow = new Manager();
-
-        managerWindow.setVisible(true);
     }
-
 }

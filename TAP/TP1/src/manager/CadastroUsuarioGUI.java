@@ -2,8 +2,7 @@
 package manager;
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
+import java.awt.event.*;
 
 public class CadastroUsuarioGUI extends JFrame {
     private JTextField nomeField;
@@ -78,8 +77,9 @@ public class CadastroUsuarioGUI extends JFrame {
             // Adicione o código para processar o cadastro confirmado aqui
 
             dispose();
-        } else {
+        }else {
             JOptionPane.showMessageDialog(this, "Cadastro cancelado.");
+            dispose();
             // Adicione o código para lidar com o cancelamento do cadastro aqui
         }
     }
@@ -87,6 +87,7 @@ public class CadastroUsuarioGUI extends JFrame {
     private void cancelar() {
         JOptionPane.showMessageDialog(this, "Cadastro cancelado.");
         // Adicione o código para lidar com o cancelamento do cadastro aqui
+        dispose();
     }
 
     public static void main(String[] args) {
