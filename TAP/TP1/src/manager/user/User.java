@@ -3,15 +3,15 @@ package manager.user;
 public class User {
     private int id;
 	private String nome;
-	private String saldo;
-	private String rendimento;
-	private String numConta;
+	private double saldo;
+	private double rendimento;
+	private int numConta;
 
     public User(){
-        this(null, null, null, null);
+        this(null, 0.0, 0.0, 0);
     }
 
-    public User(String nome, String saldo, String rendimento, String numConta){
+    public User(String nome, double saldo, double rendimento, int numConta){
         setNome(nome);
         setSaldo(saldo);
         setRendimento(rendimento);
@@ -22,11 +22,11 @@ public class User {
         return this.id;
     }
 
-	public String getSaldo() {
+	public double getSaldo() {
 		return this.saldo;
 	}
     
-    public String getRendimento() {
+    public double getRendimento() {
         return this.rendimento;
     }
     
@@ -34,7 +34,7 @@ public class User {
         return this.nome;
     }
 
-    public String getNumConta() {
+    public int getNumConta() {
         return this.numConta;
     }
       
@@ -42,11 +42,11 @@ public class User {
         this.id = id;
     }
 
-    public void setRendimento(String rendimento){
+    public void setRendimento(double rendimento){
         this.rendimento = rendimento;
     }
 
-    public void setSaldo(String saldo){
+    public void setSaldo(double saldo){
         this.saldo = saldo;
     }
 	
@@ -54,7 +54,7 @@ public class User {
         this.nome = nome;
     }
 
-    public void setNumConta(String numConta){
+    public void setNumConta(int numConta){
         this.numConta = numConta;
     }
 

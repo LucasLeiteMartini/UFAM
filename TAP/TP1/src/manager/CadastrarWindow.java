@@ -5,9 +5,10 @@ import java.security.SecureRandom;
 
 import javax.swing.*;
 
+import manager.user.User;
+
 public class CadastrarWindow extends JFrame{
     private JTextField nome;
-    private JTextField senha;
     private JTextField saldo;
     private JTextField rendimento;
 
@@ -15,13 +16,13 @@ public class CadastrarWindow extends JFrame{
         super("Cadastrar Usuários");
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setSize(400,300);
+        setLocationRelativeTo(null);
 
         JPanel panel = new JPanel(new GridBagLayout());
         GridBagConstraints gbc = new GridBagConstraints();
         gbc.insets = new Insets(5, 5, 5, 5);
 
         addField(panel, gbc, "Nome Completo:", nome = new JTextField(20));
-        addField(panel, gbc, "Senha:", senha = new JTextField(20));
         addField(panel, gbc, "Saldo atual:", saldo = new JTextField(20));
         addField(panel, gbc, "Rendimento atual:", rendimento = new JTextField(20));
 
@@ -36,16 +37,14 @@ public class CadastrarWindow extends JFrame{
 
     private void cadastrar() {
         String nome = this.nome.getText();
-        String senha = this.senha.getText();
-        String saldo = this.saldo.getText();
-        String rendimento = this.rendimento.getText();
-        String conta = geraConta(10);
+        double saldo = Double.parseDouble(this.saldo.getText());
+        double rendimento = Double.parseDouble(this.rendimento.getText());
+        int conta = geraConta(8);
 
         int confirmacao = JOptionPane.showConfirmDialog(
                 this,
                 "Confirme seus dados:\n\n" +
                         "Nome: " + nome + "\n" +
-                        "Senha: " + senha + "\n" +
                         "Saldo: " + saldo + "\n" +
                         "Rendimento: " + rendimento + "\n" +
                         "Número da Conta: " + conta,
@@ -56,14 +55,16 @@ public class CadastrarWindow extends JFrame{
         if (confirmacao == JOptionPane.YES_OPTION) {
             JOptionPane.showMessageDialog(this, "Cadastro confirmado!");
             // Adicione o código para processar o cadastro confirmado aqui
-            User user = ()
+            User user = new User(nome, saldo, rendimento, conta);
+            UserDAO userDAO = new UserDAO();
+            userDAO.addUser(user);
             dispose();
         } else {
             JOptionPane.showMessageDialog(this, "Cadastro cancelado.");
             dispose();
             // Adicione o código para lidar com o cancelamento do cadastro aqui
         }
-    }
+    } 
 
     public void addField(JPanel panel, GridBagConstraints gbc, String label, JComponent component) {
         gbc.gridx = 0;
@@ -74,7 +75,7 @@ public class CadastrarWindow extends JFrame{
         panel.add(component, gbc);
     }
     
-    private String geraConta(int tamanho) {
+    private int geraConta(int tamanho) {
         SecureRandom random = new SecureRandom();
         StringBuilder conta = new StringBuilder();
 
@@ -83,7 +84,7 @@ public class CadastrarWindow extends JFrame{
             conta.append(digito);
         }
 
-        return conta.toString();
+        return Integer.parseInt(conta.toString());
     }
 
 }

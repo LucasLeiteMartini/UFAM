@@ -12,17 +12,25 @@ public class UserDAO extends BancoDeDados{
         } catch (SQLException e) {}
     }    
 
-    public void addUser(User user){
+    public void addUser(User user) {
         try {
-            Statement st = conexao.createStatement();
-            ResultSet rs = st.executeQuery("INSERT INTO usuariso VALUES ( NULL, " + user.getNome() + ", " +
-                                                                                user.getSaldo() + ", " + 
-                                                                                user.getRendimento() + ", " + 
-                                                                                user.getNumConta());
+            String query = "INSERT INTO usuarios (nome, saldo, rendimento, num_conta) VALUES (?, ?, ?, ?)";
+            
+            try (PreparedStatement pst = conexao.prepareStatement(query)) {
+                pst.setString(2, user.getNome());
+                pst.setDouble(3, user.getSaldo());
+                pst.setDouble(4, user.getRendimento());
+                pst.setInt(5, user.getNumConta());
+                
+                int rowsAffected = pst.executeUpdate();
+                if (rowsAffected > 0) {
+                    System.out.println("Usuário adicionado com sucesso!");
+                } else {
+                    System.out.println("Falha ao adicionar usuário.");
+                }
+            }
         } catch (SQLException e) {
-            // TODO Auto-generated catch block
             e.printStackTrace();
         }
-
     }
 }

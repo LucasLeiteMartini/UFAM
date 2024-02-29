@@ -1,8 +1,6 @@
 package manager;
-import manager.*;
-import java.awt.*;
-import java.security.SecureRandom;
 
+import java.awt.*;
 import javax.swing.*;
 
 public class Manager extends JFrame{
@@ -68,15 +66,7 @@ public class Manager extends JFrame{
     private void gerirDespesas() {
         // Adicione o código para gerir despesas aqui
         JOptionPane.showMessageDialog(this, "Gerenciamento de Despesas");
-    }
-
-    private void cancelar() {
-        JOptionPane.showMessageDialog(this, "Cadastro cancelado.");
-        // Adicione o código para lidar com o cancelamento do cadastro aqui
-        dispose();
-    }
-
-    
+    }    
 
     public static void main(String[] args) {
         Manager managerWindow = new Manager();
