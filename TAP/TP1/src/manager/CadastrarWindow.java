@@ -30,6 +30,10 @@ public class CadastrarWindow extends JFrame{
         cadastrarUsuarioButton.addActionListener(e -> cadastrar());
         addField(panel, gbc, "", cadastrarUsuarioButton);
 
+        JButton cancelaCadastrButton = new JButton("Cancelar cadastro");
+        cancelaCadastrButton.addActionListener(e -> dispose());
+        addField(panel, gbc, "", cancelaCadastrButton);
+
         add(panel);
 
         setVisible(true);

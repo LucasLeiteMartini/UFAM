@@ -158,14 +158,17 @@ void counting(int vetor[], int n, int k){
         contagem[j]++;
     }
 
-    int aux[n], m=0;
-    for(int i=0;i<k+1;i++){
-        for(int j=1;j<=contagem[i];j++){
-            aux[m] = i;
-            m++;
-        }
+    for(int i=1;i<=k;i++){
+        contagem[i] = contagem[i] + contagem[i-1];
     }
 
+    int aux[n], m=0;
+    for(int i=n-1;i>=0;i--){
+        
+        int j = contagem[ vetor[i] ]-1;
+        aux[j] = vetor[i];
+        contagem[vetor[i]]--;
+    }
     for(int i=0;i<n;i++){
         vetor[i] = aux[i];
     }
@@ -173,22 +176,53 @@ void counting(int vetor[], int n, int k){
 
 }
 
+#define __pega_digito(x, i) (x/pow(10.0,i) - floor(x/pow(10.0,i)))*10
+
+void radix_sort(int vetor[], int tam, int nro_digitos){
+    int aux[tam];
+
+    for (int d=1;d<=nro_digitos;d++){
+        int contagem[]={0,0,0,0,0,0,0,0,0};
+
+        for (int i=0;i<tam;i++){
+            int dig = __pega_digito(vetor[i],d);
+            contagem[dig]++;
+            
+        }
+        for(int j=1;j<=9;j++){
+            contagem[j] = contagem[j] + contagem[j-1];
+        }
+
+        for(int i=tam-1;i>=0;i--){
+           int dig = __pega_digito(vetor[i],d);
+           int k = contagem[dig]-1; // atenção
+           aux[k] = vetor[i];
+           contagem[dig]--;
+        }
+
+        for(int i=0;i<tam;i++){
+            vetor[i] = aux[i];
+        }
+    }
+}
+
 
 int main(){
-    int TAM = 1024;
-    int vetor[TAM];
-    for(int i = 0;i<TAM;i++){
-//        vetor[i] = malloc(4);
-        vetor[i] = rand() % 10;   
-    }
+    int TAM = 10;
+    // int vetor[TAM];
+    // for(int i = 0;i<TAM;i++){
+    //     vetor[i] = malloc(4);
+    //     vetor[i] = rand() % 10;   
+    // }
     
-    //int vetor[] = {1,2,1,2,3,5,4,1,2,9};  
+    int vetor[] = {17,21,17,13,32,10,14,11,20,19};  
     mostra_vetor(vetor,0, TAM);
 //    merge_sort(vetor,TAM,comparar_int);
 //    quick_sort(vetor,TAM,comparar_int);
 //    heap_sort(vetor,TAM,comparar_int);
     
-    counting(vetor,TAM,10);
+//    counting(vetor,TAM,10);
+    radix_sort(vetor, TAM, 2);
 
     mostra_vetor(vetor,0, TAM);
 }

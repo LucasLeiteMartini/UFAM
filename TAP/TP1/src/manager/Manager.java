@@ -23,7 +23,7 @@ public class Manager extends JFrame{
         add(panel);
 
         // Adiciona botões para operações
-        JButton consultarUsuarioButton = new JButton("Consultar Usuário por ID");
+        JButton consultarUsuarioButton = new JButton("Consultar Usuário por Nome Completo");
         consultarUsuarioButton.addActionListener(e -> consultarUsuario());
         addField(panel, gbc, "", consultarUsuarioButton);
 
@@ -31,13 +31,17 @@ public class Manager extends JFrame{
         cadastrarUsuarioButton.addActionListener(e -> new CadastrarWindow());
         addField(panel, gbc, "", cadastrarUsuarioButton);
 
-        JButton consultarDespesasButton = new JButton("Consultar Despesas por ID de Usuário");
+        JButton consultarDespesasButton = new JButton("Consultar Despesas por Usuario");
         consultarDespesasButton.addActionListener(e -> consultarDespesas());
         addField(panel, gbc, "", consultarDespesasButton);
 
         JButton gerirDespesasButton = new JButton("Gerir Despesas");
         gerirDespesasButton.addActionListener(e -> gerirDespesas());
         addField(panel, gbc, "", gerirDespesasButton);
+
+        JButton closeButton = new JButton("Fechar Gerenciador");
+        closeButton.addActionListener(e -> dispose());
+        addField(panel, gbc, "", closeButton);
 
         // Torna o JFrame visível
         setVisible(true);

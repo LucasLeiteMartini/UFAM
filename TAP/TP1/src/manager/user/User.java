@@ -1,7 +1,6 @@
 package manager.user;
 
 public class User {
-    private int id;
 	private String nome;
 	private double saldo;
 	private double rendimento;
@@ -16,10 +15,6 @@ public class User {
         setSaldo(saldo);
         setRendimento(rendimento);
         setNumConta(numConta);
-    }
-
-    public int getID(){
-        return this.id;
     }
 
 	public double getSaldo() {
@@ -38,10 +33,6 @@ public class User {
         return this.numConta;
     }
       
-    public void setId(int id){
-        this.id = id;
-    }
-
     public void setRendimento(double rendimento){
         this.rendimento = rendimento;
     }
