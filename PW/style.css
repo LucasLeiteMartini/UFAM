@@ -1,0 +1,13 @@
+body{
+    margin: 0;
+}
+
+div{
+    box-shadow: 4px 4px 10px ;
+    border:2px solid black;
+    background-color: cyan;
+    background-clip: padding-box;
+    margin: 20px;
+    padding: 20px;
+    font-size: 25px;
+}
