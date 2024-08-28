@@ -1,0 +1,19 @@
+{
+    "version": "0.2",
+    "configurations": [
+        {
+            "name": "Debug",
+            "type": "cppdbg",
+            "request": "launch",
+            "program": "${workspaceFolder}/LP3/lp3",
+            "args": [],
+            "stopAtEntry": false,
+            "cwd": "${workspaceFolder}",
+            "environment": [],
+            "externalConsole": false,
+            "MIMode": "gdb",
+            "preLaunchTask": "gcc build",
+            "miDebuggerPath": "/usr/bin/gdb"
+        }
+    ]
+}
