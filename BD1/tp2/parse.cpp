@@ -119,8 +119,7 @@ void ler_arquivo_csv(const string& nome_arquivo)
             update = normalizar_string(update);
             snippet = normalizar_string(snippet);
 
-            cout << title << endl;
-
+            cout << id << endl;
           /*   Registro* novo_registro = criar_registro(id, title, year, authors, citations, update, snippet);
             size_t posicao = hash.inserir_registro_bucket(novo_registro);
 
